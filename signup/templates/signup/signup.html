@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<head>
+  <title>Esports amateur tournaments</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="{% static 'js/signup.js' %}"></script>
+</head>
+
+<body>
+
+  <form action="{% url 'signup' %}" id="signup" method="post">
+    {% csrf_token %}
+    <label for="username">Username:</label><br />
+    <input type="text" id="username-signup" name="username" maxlength="150" required/><br />
+    <label for="password">Password:</label><br />
+    <input type="password" id="password-signup" name="password" minlength="8" required/><br />
+    <label for="password-conf">Password confirmation:</label><br />
+    <input type="password" id="password-conf-signup" name="password-conf" minlength="8" required/><br />
+    <input type="submit" value="Signup" />
+    <button type="button" id="signup-switch">Already registred?</button>
+  </form>
+
+
+  <form action="{% url 'login_view' %}" id="login" method="post" class="hidden">
+    {% csrf_token %}
+    <label for="username">Username:</label><br />
+    <input type="text" id="username-login" name="username" maxlength="150" required/><br />
+    <label for="password">Password:</label><br />
+    <input type="password" id="password-login" name="password" minlength="8" required/><br />
+    <label for="password-conf">Password confirmation:</label><br />
+    <input type="submit" value="Login" />
+    <button type="button" id="login-switch">Not registred?</button>
+  <form>
+
+</body>
