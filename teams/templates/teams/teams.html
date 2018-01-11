@@ -1,0 +1,23 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+
+{% block title %}Teams{% endblock %}
+{% block content %}
+<script src="{% static 'js/save_team.js' %}"></script>
+<form id="create-team" action="{% url 'teams:create_team' %}" method="post">
+  {% csrf_token %}
+  <label for="team-name">Team name:</label><br />
+  <input type="text" id="team-name" name="team-name" maxlength="32" required/><br />
+
+  <label for="team-abbr">Team abbreviaton:</label><br />
+  <input type="text" id="team-abbr" name="team-abbr" maxlength="32" required/><br />
+  <input type="submit" value="Create new team"/>
+</form>
+<div id="Teams list">
+  <h3>Your teams:</h3>
+  {% for team in user_teams %}
+  <a href="{% url 'teams:details' team.id %}">{{ team.name }}</a>
+  <br />
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+
+{% block title %}{{ team.name }}{% endblock %}
+{% block content %}
+<script src="{% static 'js/add_member.js' %}"></script>
+<h1>{{ team.name }}</h1>
+<h3>Team members: </h3>
+<p>Founder: {{ team.founder }}</p>
+{% for member in team.teammembers_set.all %}
+  <p>{{ member.user }}</p>
+{% endfor %}
+
+{% if user == team.founder %}
+<form id="add-members" action="{% url 'teams:add_members' %}" method="post">
+  {% csrf_token %}
+  <label for="member-name">Member name:</label>
+  <br />
+  <input type="text" id="member-name" name="member-name" maxlength="150" required/>
+  <br />
+  <input type="hidden" id="team-pk" name="team-pk" value="{{team.pk}}"/>
+  <input type="submit" value="add new member"/>
+</form>
+{% endif %}
+{% endblock %}
