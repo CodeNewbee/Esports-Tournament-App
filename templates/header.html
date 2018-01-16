@@ -2,14 +2,35 @@
 
 <head>
   <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
+  {% block head %}
+  {% endblock %}
 </head>
 </body>
-<header></header>
+<header>
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'teams:teams' %}">Teams</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tournaments:tournaments' %}">Tournaments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout_view' %}">Log out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
 {% block content %}
 {% endblock %}
 <body>

@@ -3,7 +3,7 @@
 
 {% block title %}Teams{% endblock %}
 {% block content %}
-<script src="{% static 'js/save_team.js' %}"></script>
+<script src="{% static 'teams/js/save_team.js' %}"></script>
 <form id="create-team" action="{% url 'teams:create_team' %}" method="post">
   {% csrf_token %}
   <label for="team-name">Team name:</label><br />

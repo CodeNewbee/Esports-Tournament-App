@@ -1,0 +1,65 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+
+{% block title %}{{ tournament.name }}{% endblock %}
+{% block content %}
+<script src="{% static 'tournaments/js/team_applications.js' %}"></script>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>{{ tournament.name }}</h1>
+      <h6>Description:</h6>
+      <p>{{ tournament.description }}</p>
+      <h6>Where it's happening:</h6>
+      <p>{{ tournament.address }}</p>
+      <h6>Date:</h6>
+      <p>{{ tournament.tournament_date }}</p>
+    </div>
+
+    <div class="col">
+      <h3>Registered teams:</h3>
+      <ul>
+        {% for application in tournament.tournamentteams_set.all %}
+          <li><a href="{% url 'teams:details' application.team.id %}">{{ application.team.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="col">
+      {% if user == tournament.organizer %}
+        <h3>Team Applications:</h3>
+        {% if tournament.tournamentapplication_set.all %}
+          <form id="team-applications" action="{% url 'tournaments:team_applications' %}" method="post">
+            {% csrf_token %}
+            {% for application in tournament.tournamentapplication_set.all %}
+            <div class="team-application">
+              <a href="{% url 'teams:details' application.team.id %}">{{ application.team.name }}</a>
+              <input type="checkbox" name="team-applications[]" value="{{ application.team.id }}"/>
+            </div>
+            {% endfor %}
+            <input type="hidden" name="tournament-id" value="{{ tournament.id }}" />
+            <input type="submit" class="application-submit btn btn-success" name="accept" value="accept" />
+            <input type="submit" class="application-submit btn btn-danger" name="deny" value="deny" />
+          </form>
+        {% else %}
+          <p>No teams have applied</p>
+        {% endif %}
+      {% elif teams %}
+        <h3>Apply with team:</h3>
+        <form id="team-apply" action="{% url 'tournaments:team_apply' %}" method="post">
+          {% for team in teams %}
+              {% csrf_token %}
+              <div class="team">
+                <span>{{ team.name }}</span>
+                <input type="checkbox" name="teams[]" value="{{ team.id }}"/>
+                <input type="hidden" name="tournament_id" value="{{ tournament.id }}" />
+              </div>
+              <br />
+          {% endfor %}
+          <input type="submit" value="Apply" />
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

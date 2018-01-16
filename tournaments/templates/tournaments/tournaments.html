@@ -1,0 +1,64 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+
+{% block title %}Tournaments{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock %}
+
+{% block content %}
+<script src="{% static 'tournaments/js/create_tournament.js' %}"></script>
+<div class="container">
+  <div class="row">
+
+    <div class="col">
+      <h3>Create new tournament:</h3>
+      <form id="create-tournaments" action="{% url 'tournaments:create_tournament' %}" method="post">
+        {% csrf_token %}
+        <label for="tournament-name">Tournament name:</label>
+        <br />
+        <input type="text" id="tournament-name" name="tournament-name" maxlength="63" required/>
+        <br />
+
+        <label for="tournament-desc">Description:</label>
+        <br />
+        <textarea id="tournament-desc" name="tournament-desc" required></textarea>
+        <br />
+
+        <label for="tournaments-abbr">Date:</label>
+        <br />
+        <input type="text" id="tournament-date" name="tournament-date" required/>
+        <br />
+
+        <label for="tournament-address">Address:</label>
+        <br />
+        <textarea id="tournament-address" name="tournament-address" maxlength="255" required></textarea>
+        <br />
+        <input type="submit" value="Create new tournament"/>
+      </form>
+    </div>
+
+    <div class="col">
+      <h3>Latest Tournaments:</h3>
+      <ul>
+        {% for tournament in tournaments %}
+          <li><a href="{% url 'tournaments:details' tournament.id %}">{{ tournament.name }}</a>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="col">
+      <h3>Search for tournament</h3>
+      <form id="search-tournaments" action="{% url 'tournaments:search_tournament' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="tournament-search" />
+        <input type="submit" value="Search" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

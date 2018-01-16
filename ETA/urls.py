@@ -19,6 +19,7 @@ from django.contrib import admin
 from signup import views
 
 urlpatterns = [
+    url(r'^tournaments/', include('tournaments.urls')),
     url(r'^teams/', include('teams.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
